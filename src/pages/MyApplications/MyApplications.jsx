@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const MyApplications = () => {
     const { user } = useAuth();
     const [jobs, setJobs] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         // fetch(`http://localhost:5000/job-application?email=${user.email}`)
         //     .then(res => res.json())
         //     .then(data => setJobs(data))
 
-        axios.get(`http://localhost:5000/job-application?email=${user.email}`,{withCredentials:true})
+
+        // axios.get(`http://localhost:5000/job-application?email=${user.email}`,{withCredentials:true})
+        // .then(res => setJobs(res.data))
+
+        axiosSecure.get(`/job-application?email=${user.email}`)
         .then(res => setJobs(res.data))
 
     }, [user.email])
@@ -24,11 +30,11 @@ const MyApplications = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>
+                            {/* <th>
                                 <label>
                                     <input type="checkbox" className="checkbox" />
                                 </label>
-                            </th>
+                            </th> */}
                             <th>Name</th>
                             <th>Job</th>
                             <th>Favorite Color</th>
@@ -39,11 +45,11 @@ const MyApplications = () => {
                         {/* row 1 */}
                         {
                             jobs.map(job => <tr key={job._id}>
-                                <th>
+                                {/* <th>
                                     <label>
                                         <input type="checkbox" className="checkbox" />
                                     </label>
-                                </th>
+                                </th> */}
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
